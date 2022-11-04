@@ -21,7 +21,6 @@
   "dependencies": {
     "@netlify/functions": "^1.0.0",
     "@sparticuz/chromium": "^108.0.0",
-    "chrome-aws-lambda": "^9.1.0",
     "puppeteer-core": "^19.2.2"
   }
 }
