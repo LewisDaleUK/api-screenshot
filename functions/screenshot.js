@@ -1,7 +1,9 @@
 const { builder } = require("@netlify/functions");
-const chromium = require("chrome-aws-lambda");
+const chromium = require("@sparticuz/chromium");
+const puppeteer = require("puppeteer-core");
 
 function isFullUrl(url) {
+  console.log(url);
   try {
     new URL(url);
     return true;
@@ -15,7 +17,7 @@ async function screenshot(url, { format, viewport, dpr = 1, withJs = true, wait,
   // Must be between 3000 and 8500
   timeout = Math.min(Math.max(timeout, 3000), 8500);
 
-  const browser = await chromium.puppeteer.launch({
+  const browser = await puppeteer.launch({
     executablePath: await chromium.executablePath,
     args: chromium.args,
     defaultViewport: {
@@ -77,7 +79,7 @@ async function screenshot(url, { format, viewport, dpr = 1, withJs = true, wait,
 
 // Based on https://github.com/DavidWells/netlify-functions-workshop/blob/master/lessons-code-complete/use-cases/13-returning-dynamic-images/functions/return-image.js
 async function handler(event, context) {
-  console.log("Handling");
+  console.log("Handling ", event);
   // e.g. /https%3A%2F%2Fwww.11ty.dev%2F/small/1:1/smaller/
   let pathSplit = event.path.split("/").filter(entry => !!entry);
   let [url, size, aspectratio, zoom, cachebuster] = pathSplit;
