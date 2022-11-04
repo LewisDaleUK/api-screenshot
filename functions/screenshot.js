@@ -1,6 +1,5 @@
 const { builder } = require("@netlify/functions");
-const chromium = require("@sparticuz/chromium");
-const puppeteer = require("puppeteer-core");
+const chromium = require("chrome-aws-lambda");
 
 function isFullUrl(url) {
   console.log(url);
@@ -17,7 +16,7 @@ async function screenshot(url, { format, viewport, dpr = 1, withJs = true, wait,
   // Must be between 3000 and 8500
   timeout = Math.min(Math.max(timeout, 3000), 8500);
 
-  const browser = await puppeteer.launch({
+  const browser = await chromium.puppeteer.launch({
     executablePath: await chromium.executablePath,
     args: chromium.args,
     defaultViewport: {
