@@ -77,6 +77,7 @@ async function screenshot(url, { format, viewport, dpr = 1, withJs = true, wait,
 
 // Based on https://github.com/DavidWells/netlify-functions-workshop/blob/master/lessons-code-complete/use-cases/13-returning-dynamic-images/functions/return-image.js
 async function handler(event, context) {
+  console.log("Handling");
   // e.g. /https%3A%2F%2Fwww.11ty.dev%2F/small/1:1/smaller/
   let pathSplit = event.path.split("/").filter(entry => !!entry);
   let [url, size, aspectratio, zoom, cachebuster] = pathSplit;
@@ -177,6 +178,7 @@ async function handler(event, context) {
       throw new Error("Incorrect API usage. Expects one of: /:url/ or /:url/:size/ or /:url/:size/:aspectratio/")
     }
 
+    console.log(url);
     let output = await screenshot(url, {
       format,
       viewport,
